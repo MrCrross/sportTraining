@@ -1,0 +1,19 @@
+{
+  "name": "thanos",
+  "version": "1.0.0",
+  "description": "Thanos - программное обеспечение для хранения спортивных упражнений и занятий, окажет помощь в расчете калорий для поддержание формы и похудения",
+  "main": "thanos.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrCrross/sportTrainingThanos.git"
+  },
+  "author": "MrCrross",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MrCrross/sportTrainingThanos/issues"
+  },
+  "homepage": "https://github.com/MrCrross/sportTrainingThanos#readme"
+}
