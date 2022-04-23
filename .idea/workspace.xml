@@ -2,104 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e233d8ae-112c-477f-ad8d-91088ca954fa" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/controllers/auth.controller.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllers/course.controller.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllers/exercise.controller.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllers/main.controller.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllers/quote.controller.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllers/training.controller.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllers/user.controller.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/middleware/auth.middleware.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/middleware/checkRole.middleware.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/calc.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/pt-sans-caption-bold.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/pt-sans-caption-bold.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/pt-sans-caption-regular.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/pt-sans-caption-regular.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/img/user.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/auth/login.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/auth/registration.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/jquery.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/store/Auth.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/store/Course.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/store/Exercise.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/store/Quote.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/store/Toast.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/store/Token.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/store/Training.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/api/api.router.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/api/auth.api.router.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/api/course.api.router.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/api/exercise.api.router.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/api/quote.api.router.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/api/training.api.router.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/web/auth.web.router.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/web/course.web.router.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/web/exercise.web.router.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/web/main.web.router.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/web/quote.web.router.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/web/training.web.router.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/web/web.router.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/seeders/course.seeder.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/seeders/courseTraining.seeder.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/seeders/exercise.seeder.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/seeders/exerciseType.seeder.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/seeders/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/seeders/quote.seeder.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/seeders/training.seeder.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/seeders/trainingExercise.seeder.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/seeders/trainingType.seeder.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/seeders/user.seeder.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/courses.services.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/exercises.services.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/quotes.services.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/trainings.services.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/auth/login.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/auth/registration.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/calc.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/courses/create.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/courses/edit.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/courses/index.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/courses/show.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/courses/showDay.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/exercises/create.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/exercises/index.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/exercises/types.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/layouts/app.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/main.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/partials/btn.success.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/partials/link.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/partials/menu.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/partials/modal.createExerciseType.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/partials/modal.createQuote.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/partials/modal.createTrainingType.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/partials/modal.updateExercise.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/partials/modal.updateExerciseType.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/partials/modal.updateQuote.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/partials/modal.updateTrainingType.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/partials/toast.danger.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/partials/toast.success.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/partials/toast.warning.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/quotes.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/trainings/create.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/trainings/edit.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/trainings/index.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/trainings/types.hbs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/calc.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calc.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/Result.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/store/Result.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/calc.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/partials/quote.hbs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.template" beforeDir="false" afterPath="$PROJECT_DIR$/.env.template" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/course.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/course.controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/main.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/main.controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/quotes.services.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/quotes.services.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/calc.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/calc.hbs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/courses/index.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/courses/index.hbs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/courses/show.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/courses/show.hbs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/courses/showDay.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/courses/showDay.hbs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/main.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/main.hbs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,17 +43,17 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/views/courses" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\projects\sportTraining" />
       <recent name="D:\projects\sportTraining\views\courses" />
       <recent name="D:\projects\sportTraining\routes\api" />
       <recent name="D:\projects\sportTraining\routes\web" />
       <recent name="D:\projects\sportTraining\services" />
-      <recent name="D:\projects\sportTraining\seeders" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\projects\sportTraining\seeders" />
@@ -154,7 +68,7 @@
       <option name="presentableId" value="Default" />
       <updated>1650595944849</updated>
       <workItem from="1650595947626" duration="18563000" />
-      <workItem from="1650695144123" duration="17296000" />
+      <workItem from="1650695144123" duration="18604000" />
     </task>
     <servers />
   </component>

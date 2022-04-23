@@ -1,28 +1,35 @@
 const CourseService = require('../services/courses.services')
 const TrainingService = require('../services/trainings.services')
+const QuoteService = require("../services/quotes.services");
 
 class CourseController {
 
     async index(req, res) {
         const courses = await CourseService.all()
+        const quote = await QuoteService.random()
         return res.render('courses/index', {
             courses,
+            quote,
             page:[1]
         })
     }
 
     async show(req, res) {
         const course = await CourseService.one(req.params.id)
+        const quote = await QuoteService.random()
         return res.render('courses/show', {
             course,
+            quote,
             page:[1]
         })
     }
 
     async showDay(req, res) {
         const day = await CourseService.day(req.params.id,req.params.day)
+        const quote = await QuoteService.random()
         return res.render('courses/showDay', {
             day,
+            quote,
             page:[1]
         })
     }

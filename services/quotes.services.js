@@ -10,6 +10,19 @@ class QuotesServices{
         });
     }
 
+    async random(){
+        const last = await Quote.findOne({
+            attributes:[
+                'id'
+            ],
+            limit:1,
+            order: [['id','desc']],
+            raw:true
+        })
+        const rand = Math.floor(Math.random() * Number(last.id)) + 1
+        return await Quote.findByPk(rand)
+    }
+
     async create(data){
         const t = await sequelize.transaction()
         try {
