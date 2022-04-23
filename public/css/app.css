@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind flowbite;
+
+@layer base {
+
+}
+
+@layer components {
+    .link {
+        @apply block py-2 pr-4 pl-3 rounded text-gray-100 md:bg-transparent hover:text-red-500 md:p-0;
+    }
+
+    .link_success {
+        @apply text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg
+        text-sm px-5 py-2.5 text-center cursor-pointer;
+    }
+
+    .form_label {
+        @apply text-gray-100 font-bold mx-2;
+    }
+
+    .form_input {
+        @apply text-sm rounded-md px-3 py-1 border-2 border-transparent hover:border-red-400 focus:border-red-500 ring-0 focus:ring-0;
+    }
+
+    .form_textarea {
+        @apply w-full text-sm border-2 border-transparent rounded-md px-3 py-1 hover:border-red-400 focus:border-red-500 ring-0 focus:ring-0;
+    }
+
+    .form_submit {
+        @apply bg-zinc-600 ring-4 ring-transparent py-2 px-3 rounded-xl text-red-500 hover:ring-zinc-900 focus:ring-zinc-900 disabled:bg-zinc-300;
+    }
+
+    .btn_danger{
+        @apply text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg
+        text-sm px-5 py-2.5 text-center cursor-pointer;
+    }
+}
+
+
+@layer utilities {
+
+}

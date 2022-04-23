@@ -1,0 +1,119 @@
+<header class="w-full py-3 bg-zinc-800 mt-4 menu-admin hidden">
+    <div class="container flex flex-wrap items-center justify-between items-center mx-auto">
+        <nav class="items-center justify-between flex w-full md:order-1 ">
+            <ul class="flex md:flex-row md:space-x-8 md:text-sm md:font-medium my-2">
+                <li>
+                    <a class="link" href="/training">Тренировки</a>
+                </li>
+                <li>
+                    <a class="link" href="/training/types">Типы тренировок</a>
+                </li>
+                <li>
+                    <a class="link" href="/exercise/create">Добавить упражнения</a>
+                </li>
+            </ul>
+            <ul class="flex md:flex-row md:space-x-8 md:text-sm md:font-medium my-2">
+                <li>
+                    <a class="link_success" id="addTrainingType">Добавить тип тренировок</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<form id="updateTrainingForm" class="container max-w-md mx-auto bg-zinc-800 my-10 rounded-xl">
+    <div class="flex items-center justify-center p-6 space-x-2 rounded-t border-b border-red-500">
+        <h3 class="text-xl font-semibold text-red-500 lg:text-2xl">
+            Изменение тренировки
+        </h3>
+    </div>
+    <div class="p-6 space-y-6 w-full">
+        <div class="flex flex-col w-full">
+            {{#training.dataValues}}
+                <div class="my-2 flex justify-between items-center">
+                    <input type="text" id="id" value="{{id}}" readonly hidden required>
+                    <label class="form_label" for="name">Название тренировки:</label>
+                    <input class="form_input" id="name" value="{{name}}" placeholder="Название тренировки"/>
+                </div>
+            {{/training.dataValues}}
+            <div class="my-2 flex justify-between items-center">
+                <label class="form_label" for="trainingType">Тип тренировки:</label>
+                <select class="form_input" id="trainingTypeId">
+                    {{#forEach trainingTypes}}
+                        <option value="{{id}}">{{name}}</option>
+                    {{/forEach}}
+                </select>
+            </div>
+            <div class="my-2 flex flex-col items-center">
+                <h3 class="text-xl font-semibold text-red-500 lg:text-2xl">
+                    Упражнения {{> btn.success name="+" type="button" class="px-3 py-3" id="addExercise" }}
+                </h3>
+                <div id="exercises_container" class="w-full">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex items-center justify-center p-6 space-x-2 rounded-b border-t border-red-500">
+        <button class="form_submit" type="submit">Изменить</button>
+    </div>
+</form>
+
+<script src="/js/store/Training.js"></script>
+<script>
+    const trainingType= "{{training.dataValues.trainingTypeId}}"
+    const exercises =JSON.stringify([
+        {{#each training.dataValues.trainingExercises}}
+        {{#dataValues}}
+            {
+                chain:"{{chain}}",
+                exercise:"{{exerciseId}}",
+            },
+        {{/dataValues}}
+    {{/each}}
+    ])
+    const container = $('#exercises_container')
+    const elemExercise = $(`<div class="exercise_container flex flex-row items-center my-2">
+                        <label class="form_label" for=""></label>
+                        <select class="form_input w-full mx-1" name="exercises">
+                            {{#forEach exercises}}
+                                <option value="{{id}}">{{name}}</option>
+                            {{/forEach}}
+                        </select>
+                        <button class="btn_danger deleteExercise" type="button">-</button>
+                    </div>`)
+    $('#addExercise').on('click', () => {
+        const elem = elemExercise.clone()
+        elem.find('label').html(String(Number(container.find('select').length) + 1) + '.')
+        elem.find('.deleteExercise').on('click', (e) => {
+            $(e.target).parents('.exercise_container').remove()
+            container.find('label').each((i, e) => {
+                $(e).html(String(i + 1) + '.')
+            })
+        })
+        container.append(elem)
+    })
+
+    $(document).ready(()=>{
+        const type = $('#trainingTypeId')
+        type.find(`option[value="${trainingType}"]`).prop('selected',true)
+        const ex = JSON.parse(exercises)
+        ex.forEach((el)=>{
+            const elem = elemExercise.clone()
+            elem.find('label').html(el.chain+'.')
+            elem.find(`select option[value="${el.exercise}"]`).prop('selected',true)
+            elem.find('.deleteExercise').on('click', (e) => {
+                $(e.target).parents('.exercise_container').remove()
+                container.find('label').each((i, e) => {
+                    $(e).html(String(i + 1) + '.')
+                })
+            })
+            container.append(elem)
+        })
+    })
+
+    $('#updateTrainingForm').on('submit',(e)=>{
+        new Training().update(e)
+    })
+</script>

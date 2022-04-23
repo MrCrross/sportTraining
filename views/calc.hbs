@@ -1,19 +1,10 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Счётчик калорий</title>
-</head>
-<body class="page">
-<main class="main">
-    <div class="container">
+<link rel="stylesheet" href="/css/normalize.css">
+<link rel="stylesheet" href="/css/calc.css">
+<main class="bg-zinc-900">
+    <div class="container w-1/2 mx-auto">
         <article class="counter">
             <h1 class="counter__heading heading-main">
-                Счётчик калорий
+                Калькулятор калорий
             </h1>
             <form class="counter__form form" name="counter" action="#" method="post">
                 <div class="form__item">
@@ -36,7 +27,7 @@
                     </ul>
                 </div>
                 <fieldset class="form__item form__parameters" name="parameters">
-                    <legend class="visually-hidden">
+                    <legend class="heading">
                         Физические параметры
                     </legend>
                     <div class="inputs-group">
@@ -191,10 +182,8 @@
         </article>
     </div>
 </main>
-<script src="js/formatInput.js" defer></script>
-<script src="js/formatNumber.js" defer></script>
-<script src="js/Result.js" defer></script>
-<script src="js/CaloriesCounter.js" defer></script>
-<script src="js/index.js" defer></script>
-</body>
-</html>
+<script src="/js/formatInput.js"></script>
+<script src="/js/formatNumber.js"></script>
+<script src="/js/store/Result.js"></script>
+<script src="/js/CaloriesCounter.js"></script>
+<script src="/js/calc.js"></script>

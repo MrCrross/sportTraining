@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SportTraining</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.js"></script>
+    <script src="/flowbite/flowbite.js"></script>
+    <script src="/js/store/Token.js"></script>
+    <script src="/js/store/Auth.js"></script>
+    <script src="/js/store/Toast.js"></script>
+</head>
+<body class="relative bg-zinc-900">
+
+{{>toast.success}}
+{{>toast.warning}}
+{{>toast.danger}}
+
+{{> menu}}
+
+{{{body}}}
+
+<div class="-z-50 absolute top-0 left-0 w-full min-h-screen h-max bg-zinc-900"></div>
+<div modal-backdrop="" class="bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40 hidden"></div>
+<script>
+    $(`a.link[href="${location.pathname}"]`).addClass('text-red-500').removeClass('text-gray-100')
+    localStorage.setItem('page',JSON.stringify([{{#each page}} {{.}}, {{/each}}]))
+    const auth = new Auth()
+    const txs = document.querySelectorAll("textarea");
+    txs.forEach(function (tx) {
+        tx.setAttribute("style", "overflow-y:hidden;");
+        tx.addEventListener("input", OnInput);
+    })
+    function OnInput() {
+        this.style.height = "auto";
+        this.style.height = (this.scrollHeight) + "px";
+    }
+    function modalToggle(modal){
+        if($(modal).hasClass('hidden')){
+            $(modal).removeClass('hidden')
+            $(modal).addClass('flex')
+            $("div[modal-backdrop='']").removeClass('hidden')
+        }
+        else if(!$(modal).hasClass('hidden')){
+            $(modal).addClass('hidden')
+            $(modal).removeClass('flex')
+            $("div[modal-backdrop='']").addClass('hidden')
+        }
+    }
+</script>
+</body>
+</html>

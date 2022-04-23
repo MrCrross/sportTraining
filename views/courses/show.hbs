@@ -1,0 +1,114 @@
+<header class="w-full py-3 bg-zinc-800 mt-4 menu-admin hidden">
+    <div class="container flex flex-wrap items-center justify-between items-center mx-auto">
+        <nav class="items-center justify-between flex w-full md:order-1 ">
+            <ul class="flex md:flex-row md:space-x-8 md:text-sm md:font-medium my-2">
+                <li>
+                    <a class="link" href="/course">Курсы тренировок</a>
+                </li>
+                <li>
+                    <a class="link menu-admin hidden" href="/course/create">Добавить курс</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+{{#course.dataValues}}
+    <figure id="card{{id}}"
+            class="container mx-auto my-10 bg-zinc-800 rounded-lg border-2 border-red-500 shadow-ms">
+        <div class="flex justify-between px-4 py-4 mb-4 border-b-2 border-red-500">
+            <div class="flex flex-col my-1">
+                <p class="text-red-500 font-bold text-xl">{{name}}</p>
+            </div>
+            <button id="dropdownButton{{id}}" data-dropdown-toggle="dropdown{{id}}"
+                    class="menu-admin hidden sm:inline-block text-gray-100 hover:bg-zinc-600 focus:outline-none focus:ring-4 focus:outline-none focus:ring-zinc-500 rounded-lg text-sm p-1.5"
+                    type="button">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path>
+                </svg>
+            </button>
+            <div id="dropdown{{id}}"
+                 class="hidden z-10 w-44 text-base list-none bg-white rounded divide-y divide-gray-100 shadow">
+                <ul class="py-1" aria-labelledby="dropdownButton{{id}}">
+                    <li>
+                        <a href="/course/{{id}}/edit"
+                           class="cursor-pointer block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Изменить</a>
+                    </li>
+                    <li>
+                        <a data-id="{{id}}" type="button"
+                           class="cursor-pointer deleteCourse block py-2 px-4 text-sm text-red-600 hover:bg-gray-100">Удалить</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="flex flex-col ">
+            {{#each courseTrainings}}
+                {{#dataValues}}
+                    <figure class="bg-zinc-800 mx-2 my-3 rounded-lg border-2 border-red-500 shadow-ms hover:bg-red-900">
+                        <a href="/course/{{../../id}}/day/{{day}}">
+                            <p class="mx-4 my-2 font-bold text-2xl text-red-500 my-2">Название:</p>
+                            <div class="mx-6 my-2 flex justify-start">
+                                <div class="mr-2">
+                                    <span class="font-bold text-red-500 mr-2">День:</span>
+                                    <span class="text-gray-100">{{day}}</span>
+                                </div>
+                                <div>
+                                    <span class="font-bold text-red-500 mr-2">Тренировка:</span>
+                                    <span class="text-gray-100">
+                                        {{training.dataValues.trainingType.dataValues.name}}:
+                                        {{training.dataValues.name}}
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="mx-4 my-2 font-bold text-2xl text-red-500 my-2">Упражнения:</p>
+                            <div class="mx-6 my-2 flex flex-col">
+                                {{#each training.dataValues.trainingExercises}}
+                                    <div class="flex flex-col my-1">
+                                        {{#dataValues}}
+                                            <div>
+                                                <span class="text-red-500 text-md font-bold mr-1">№:</span>
+                                                <span class="exercise_duration text-gray-100 ">{{chain}}</span>
+                                            </div>
+                                            {{#exercise.dataValues}}
+                                                <div class="flex justify-between">
+                                                    <div>
+                                                        <span class="text-red-500 text-md font-bold mr-1">Название:</span>
+                                                        <span class="exercise_name text-gray-100 ">{{name}}</span>
+                                                    </div>
+                                                </div>
+                                            {{/exercise.dataValues}}
+                                        {{/dataValues}}
+                                    </div>
+                                {{/each}}
+                            </div>
+                        </a>
+                    </figure>
+                {{/dataValues}}
+            {{/each}}
+        </div>
+        <div class="my-4 pt-4 flex flex-row justify-end border-t-2 border-red-500">
+            <div class="mx-5">
+                <span class="text-red-500 text-md font-bold mr-2">Создал:</span>
+                <span class="text-gray-100 ">
+                    {{#user.dataValues}}
+                        {{last_name}} {{first_name}} ({{name}})
+                    {{/user.dataValues}}
+                </span>
+            </div>
+        </div>
+    </figure>
+{{/course.dataValues}}
+
+<script src="/js/store/Course.js"></script>
+<script>
+    $('.role').each((i, e) => {
+        const role = $(e).data('id')
+        $(e).html("(" + new Auth().getNameRole(role) + ")")
+    })
+
+    $('#deleteCourse').on('click', (e) => {
+        const el = $(e.target),
+                id = el.data('id')
+        new Course().delete(id)
+    })
+</script>

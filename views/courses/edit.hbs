@@ -1,0 +1,100 @@
+<header class="w-full py-3 bg-zinc-800 mt-4 menu-admin hidden">
+    <div class="container flex flex-wrap items-center justify-between items-center mx-auto">
+        <nav class="items-center justify-between flex w-full md:order-1 ">
+            <ul class="flex md:flex-row md:space-x-8 md:text-sm md:font-medium my-2">
+                <li>
+                    <a class="link" href="../">К курсу</a>
+                </li>
+                <li>
+                    <a class="link" href="../../">К курсам</a>
+                </li>
+                <li>
+                    <a class="link" href="/training/create">Добавить тренировок</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<form id="updateCourseForm" class="container max-w-md mx-auto bg-zinc-800 my-10 rounded-xl">
+    <div class="flex items-center justify-center p-6 space-x-2 rounded-t border-b border-red-500">
+        <h3 class="text-xl font-semibold text-red-500 lg:text-2xl">
+            Изменение курса
+        </h3>
+    </div>
+    {{#course.dataValues}}
+        <div class="p-6 space-y-6 w-full">
+            <div class="flex flex-col w-full">
+                <div class="my-2 flex justify-between items-center">
+                    <input type="text" id="id" value="{{id}}" readonly hidden required>
+                    <label class="form_label" for="name">Название курса:</label>
+                    <input class="form_input" id="name" value="{{name}}" placeholder="Название тренировки"/>
+                </div>
+
+                <div class="my-2 flex flex-col items-center">
+                    <h3 class="text-xl font-semibold text-red-500 lg:text-2xl">
+                        Тренировки {{> btn.success name="+" type="button" class="px-2 py-0.5" id="addTraining" }}
+                    </h3>
+                    <div id="trainings_container" class="w-full">
+                        {{#each courseTrainings}}
+                            {{#dataValues.training.dataValues}}
+                                <div class="training_container flex flex-row items-center my-2">
+                                    <label class="form_label" for="">{{../dataValues.day}}.</label>
+                                    <select class="form_input w-full mx-1" name="trainings">
+                                        {{#each ../../../trainings}}
+                                            {{#dataValues}}
+                                                <option value="{{id}}" {{#eq id ../dataValues.id}}selected{{/eq}}>{{name}}</option>
+                                            {{/dataValues}}
+                                        {{/each}}
+                                    </select>
+                                    <button class="btn_danger deleteTraining" type="button">-</button>
+                                </div>
+                            {{/dataValues.training.dataValues}}
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{/course.dataValues}}
+    <div class="flex items-center justify-center p-6 space-x-2 rounded-b border-t border-red-500">
+        <button class="form_submit" type="submit">Изменить</button>
+    </div>
+</form>
+
+<script src="/js/store/Course.js"></script>
+<script>
+    const container = $('#trainings_container')
+    const elemTraining = $(`<div class="training_container flex flex-row items-center my-2">
+                        <label class="form_label" for=""></label>
+                        <select class="form_input w-full mx-1" name="trainings">
+                            {{#each trainings}}
+        {{#dataValues}}
+                                    <option value="{{id}}">{{name}}</option>
+                                {{/dataValues}}
+    {{/each}}
+                        </select>
+                        <button class="btn_danger deleteTraining" type="button">-</button>
+                    </div>`)
+    $('#addTraining').on('click', () => {
+        const elem = elemTraining.clone()
+        elem.find('label').html(String(Number(container.find('select').length) + 1) + '.')
+        elem.find('.deleteTraining').on('click', (e) => {
+            $(e.target).parents('.training_container').remove()
+            container.find('label').each((i, e) => {
+                $(e).html(String(i + 1) + '.')
+            })
+        })
+        container.append(elem)
+    })
+
+    container.on('click','.deleteTraining',(e)=>{
+        $(e.target).parents('.training_container').remove()
+        container.find('label').each((i, e) => {
+            $(e).html(String(i + 1) + '.')
+        })
+    })
+
+    $('#updateCourseForm').on('submit', (e) => {
+        new Course().update(e)
+    })
+</script>

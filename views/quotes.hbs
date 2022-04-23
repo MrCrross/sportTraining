@@ -1,0 +1,83 @@
+<div class="w-full py-3 bg-zinc-800 mt-4">
+    <div class="container flex flex-wrap items-center justify-between items-center mx-auto">
+        <div class="items-center flex md:w-1/2 md:order-1 ">
+            <ul class="flex md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium ">
+                <li>
+                    {{>btn.success name="Добавить" class="menu-admin hidden" type="button" id="createQuoteBtn" }}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div id="quotes_container" class="grid grid-cols-2 gap-3 my-10 container mx-auto">
+{{#if quotes}}
+    {{#forEach quotes }}
+        <div id="card{{id}}" class="bg-zinc-800 rounded-lg border border-red-500 shadow-ms">
+            <div class="flex justify-end px-4 pt-4">
+                <button id="dropdownButton{{id}}" data-dropdown-toggle="dropdown{{id}}"
+                        class="menu-admin hidden sm:inline-block text-gray-100 hover:bg-zinc-600 focus:outline-none focus:ring-4 focus:outline-none focus:ring-zinc-500 rounded-lg text-sm p-1.5"
+                        type="button">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path>
+                    </svg>
+                </button>
+                <div id="dropdown{{id}}"
+                     class="hidden z-10 w-44 text-base list-none bg-white rounded divide-y divide-gray-100 shadow">
+                    <ul class="py-1" aria-labelledby="dropdownButton{{id}}">
+                        <li>
+                            <a type="button" data-id="{{id}}" data-name="{{name}}" data-author="{{author}}"
+                               class="cursor-pointer editQuote block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Изменить</a>
+                        </li>
+                        <li>
+                            <a data-id="{{id}}" type="button"
+                               class="cursor-pointer deleteQuote block py-2 px-4 text-sm text-red-600 hover:bg-gray-100">Удалить</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="flex flex-col justify-center items-end pb-10 mx-4">
+                <div class="quote_name text-red-500 text-md">"{{name}}"</div>
+                <div class="quote_author text-sm text-gray-400 italic">- {{author}}</div>
+            </div>
+        </div>
+    {{/forEach }}
+{{else}}
+    <h3 class="text-xl font-semibold text-red-500 lg:text-2xl">
+        Цитат пока нет. Добавьте их.
+    </h3>
+{{/if}}
+</div>
+
+{{> modal.createQuote}}
+{{> modal.updateQuote}}
+
+<script src="/js/store/Quote.js"></script>
+<script>
+    const container = $('#quotes_container')
+
+    $('#createQuoteBtn').on('click',()=>{
+        modalToggle($('#createQuote'))
+    })
+
+    container.on('click', '.editQuote', (e) => {
+        const el = $(e.target),
+                id = el.data('id'),
+                name = el.data('name'),
+                author = el.data('author'),
+                modal = $('#updateQuote'),
+                inputId = modal.find('#id'),
+                inputName = modal.find('#name'),
+                inputAuthor = modal.find('#author')
+        inputId.val(id)
+        inputName.val(name)
+        inputAuthor.val(author)
+        modalToggle(modal)
+    })
+    container.on('click', '.deleteQuote', (e) => {
+        const el = $(e.target),
+                id = el.data('id')
+        new Quote().delete(id)
+    })
+</script>

@@ -1,0 +1,81 @@
+<header class="w-full py-3 bg-zinc-800 mt-4 menu-admin hidden">
+    <div class="container flex flex-wrap items-center justify-between items-center mx-auto">
+        <nav class="items-center justify-between flex w-full md:order-1 ">
+            <ul class="flex md:flex-row md:space-x-8 md:text-sm md:font-medium my-2">
+                <li>
+                    <a class="link" href="/exercise">Упражнения</a>
+                </li>
+                <li>
+                    <a class="link" href="/exercise/types">Типы упражнений</a>
+                </li>
+            </ul>
+            <ul class="flex md:flex-row md:space-x-8 md:text-sm md:font-medium my-2">
+                <li>
+                    <a class="link_success" id="addExerciseType">Добавить типов упражнения</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<form id="createExerciseForm" class="container max-w-md mx-auto bg-zinc-800 my-10 rounded-xl">
+
+    <div class="flex items-center justify-center p-6 space-x-2 rounded-t border-b border-red-500">
+        <h3 class="text-xl font-semibold text-red-500 lg:text-2xl">
+            Добавление упражнения
+        </h3>
+    </div>
+
+    <div class="p-6 space-y-6">
+        <div class="flex flex-col mx-auto max-w-sm ">
+            <div class="my-2 flex flex-col justify-between">
+                <label class="form_label" for="name">Название упражнения:</label>
+                <input class="form_input" type="text" id="name" placeholder="Название" required>
+            </div>
+            <div class="my-2 flex flex-col justify-between">
+                <label class="form_label" for="type">Тип упражнения:</label>
+                <select class="form_input" id="exerciseType">
+                    {{#if types}}
+                        {{#forEach types}}
+                            <option value="{{id}}">{{name}}</option>
+                        {{/forEach}}
+                    {{/if}}
+                </select>
+            </div>
+            <div class="my-2 flex flex-col justify-between">
+                <label class="form_label" for="description">Описание упражнения:</label>
+                <textarea class="form_textarea" id="description" placeholder="Описание упражнения"></textarea>
+            </div>
+            <div class="my-2 flex flex-col justify-between">
+                <label class="form_label" for="duration">Длительность упражнения (сек.):</label>
+                <input class="form_input" id="duration" type="number" min="0" placeholder="Длительность упражнения">
+            </div>
+            <div class="my-2 flex flex-col justify-between">
+                <label class="form_label" for="rest">Длительность отдыха (сек.):</label>
+                <input class="form_input" id="rest" type="number" min="0" placeholder="Длительность отдыха">
+            </div>
+            <div class="my-2 flex flex-col justify-between">
+                <label class="form_label" for="repetitions">Количество повторений:</label>
+                <input class="form_input" id="repetitions" type="number" min="0" placeholder="Количество повторений">
+            </div>
+        </div>
+    </div>
+
+    <div class="flex items-center justify-center p-6 space-x-2 rounded-b border-t border-red-500">
+        <button class="form_submit" type="submit">Добавить</button>
+    </div>
+</form>
+
+{{> modal.createExerciseType}}
+
+<script src="/js/store/Exercise.js"></script>
+<script>
+    $('#addExerciseType').on('click', (e) => {
+        e.preventDefault()
+        modalToggle($('#createExerciseType'))
+    })
+    $('#createExerciseForm').on('submit', (e) => {
+        e.preventDefault()
+        new Exercise().create(e)
+    })
+</script>

@@ -1,0 +1,119 @@
+<header class="w-full py-3 bg-zinc-800 mt-4 menu-admin hidden">
+    <div class="container flex flex-wrap items-center justify-between items-center mx-auto">
+        <nav class="items-center flex md:w-1/2 md:order-1 ">
+            <ul class="flex md:flex-row md:space-x-8 md:text-sm md:font-medium my-2">
+                <li>
+                    <a class="link" href="/exercise">Упражнения</a>
+                </li>
+                <li>
+                    <a class="link" href="/exercise/types">Типы упражнений</a>
+                </li>
+                <li>
+                    <a class="link" href="/exercise/create">Добавить</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div id="exercises_container" class="grid grid-cols-2 gap-3 container mx-auto my-10">
+    {{#if exercises}}
+        {{#forEach exercises}}
+            <figure id="card{{id}}" class="bg-zinc-800 rounded-lg border border-red-500 shadow-ms">
+                <div class="flex justify-between px-4 pt-4">
+                    <div class="flex flex-col my-1">
+                        <p class="exercise_name text-red-500 font-bold ">{{'exerciseType.name'}}: {{name}}</p>
+                    </div>
+                    <button id="dropdownButton{{id}}" data-dropdown-toggle="dropdown{{id}}"
+                            class="menu-admin hidden sm:inline-block text-gray-100 hover:bg-zinc-600 focus:outline-none focus:ring-4 focus:outline-none focus:ring-zinc-500 rounded-lg text-sm p-1.5"
+                            type="button">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path>
+                        </svg>
+                    </button>
+                    <div id="dropdown{{id}}"
+                         class="hidden z-10 w-44 text-base list-none bg-white rounded divide-y divide-gray-100 shadow">
+                        <ul class="py-1" aria-labelledby="dropdownButton{{id}}">
+                            <li>
+                                <a type="button"
+                                   data-id="{{id}}"
+                                   data-name="{{name}}"
+                                   data-type="{{exerciseTypeId}}"
+                                   data-description="{{description}}"
+                                   data-duration="{{duration}}"
+                                   data-repetitions="{{repetitions}}"
+                                   data-rest="{{rest}}"
+                                   class="cursor-pointer editExercise block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Изменить</a>
+                            </li>
+                            <li>
+                                <a data-id="{{id}}" type="button"
+                                   class="cursor-pointer deleteExercise block py-2 px-4 text-sm text-red-600 hover:bg-gray-100">Удалить</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-center mx-4 my-2">
+                    <div class="flex flex-col my-1">
+                        <p class="text-red-500 text-md font-bold mb-1">Описание:</p>
+                        <p class="exercise_description text-gray-100 ">{{description}}</p>
+                    </div>
+                    <div class="flex justify-between my-1">
+                        <div>
+                            <span class="text-red-500 text-md font-bold mr-1">Длительность:</span>
+                            <span class="exercise_duration text-gray-100 ">{{duration}} сек.</span>
+                        </div>
+                        <div>
+                            <span class="text-red-500 text-md font-bold mr-1">Повторения:</span>
+                            <span class="exercise_repetitions text-gray-100 ">{{repetitions}} раз</span>
+                        </div>
+                        <div>
+                            <span class="text-red-500 text-md font-bold mr-1">Отдых:</span>
+                            <span class="exercise_rest text-gray-100 ">{{rest}} сек.</span>
+                        </div>
+                    </div>
+                </div>
+            </figure>
+        {{/forEach}}
+    {{/if}}
+</div>
+
+{{> modal.updateExercise types=types}}
+
+<script src="/js/store/Exercise.js"></script>
+<script>
+
+    const container = $('#exercises_container')
+
+    container.on('click','.editExercise',(e)=>{
+        const el = $(e.target),
+                id = el.data('id'),
+                name = el.data('name'),
+                type = el.data('type'),
+                description = el.data('description'),
+                duration = el.data('duration'),
+                repetitions = el.data('repetitions'),
+                rest = el.data('rest')
+        const modal = $('#updateExercise'),
+                iId =modal.find('#id'),
+                iName =modal.find('#name'),
+                sType =modal.find('#exerciseTypeId'),
+                tDescription =modal.find('#description'),
+                iDuration =modal.find('#duration'),
+                iRepetitions =modal.find('#repetitions'),
+                iRest =modal.find('#rest')
+        iId.val(id)
+        iName.val(name)
+        sType.find(`option[value=${type}]`).prop('selected',true)
+        tDescription.val(description)
+        iDuration.val(duration)
+        iRepetitions.val(repetitions)
+        iRest.val(rest)
+        modalToggle(modal)
+    })
+
+    container.on('click','.deleteExercise',(e)=>{
+        const el = $(e.target),
+                id = el.data('id')
+        new Exercise().delete(id)
+    })
+</script>

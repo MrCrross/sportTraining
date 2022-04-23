@@ -1,2 +1,2 @@
-# sportTrainingThanos
-Thanos
+# sportTraining
+sportTraining

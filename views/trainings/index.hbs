@@ -1,0 +1,132 @@
+<header class="w-full py-3 bg-zinc-800 mt-4 menu-admin hidden">
+    <div class="container flex flex-wrap items-center justify-between items-center mx-auto">
+        <nav class="items-center justify-between flex w-full md:order-1 ">
+            <ul class="flex md:flex-row md:space-x-8 md:text-sm md:font-medium my-2">
+                <li>
+                    <a class="link" href="/training">Тренировки</a>
+                </li>
+                <li>
+                    <a class="link" href="/training/types">Типы тренировок</a>
+                </li>
+                <li>
+                    <a class="link" href="/training/create">Добавить тренировку</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div id="trainings_container" class="grid grid-cols-2 gap-3 container mx-auto my-10">
+    {{#if trainings}}
+        {{#each trainings}}
+            {{#dataValues}}
+                <figure id="card{{id}}" class="bg-zinc-800 rounded-lg border border-red-500 shadow-ms">
+                    <div class="flex justify-between px-4 pt-4 mb-2">
+                        <div class="flex flex-col my-1">
+                            <p class="trainingType_name text-red-500 font-bold ">{{name}}</p>
+                        </div>
+                        <button id="dropdownButton{{id}}" data-dropdown-toggle="dropdown{{id}}"
+                                class="menu-admin hidden sm:inline-block text-gray-100 hover:bg-zinc-600 focus:outline-none focus:ring-4 focus:outline-none focus:ring-zinc-500 rounded-lg text-sm p-1.5"
+                                type="button">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path>
+                            </svg>
+                        </button>
+                        <div id="dropdown{{id}}"
+                             class="hidden z-10 w-44 text-base list-none bg-white rounded divide-y divide-gray-100 shadow">
+                            <ul class="py-1" aria-labelledby="dropdownButton{{id}}">
+                                <li>
+                                    <a href="/training/{{id}}/edit" class="cursor-pointer block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Изменить</a>
+                                </li>
+                                <li>
+                                    <a data-id="{{id}}" type="button"
+                                       class="cursor-pointer deleteTraining block py-2 px-4 text-sm text-red-600 hover:bg-gray-100">Удалить</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-center mx-4 my-2">
+                        <div class="flex flex-row my-1">
+                            <p class="text-red-500 text-md font-bold mr-2">Тип тренировки:</p>
+                            <p class="exercise_description text-gray-100 ">
+                                {{#trainingType.dataValues}}
+                                    {{name}}
+                                {{/trainingType.dataValues}}
+                            </p>
+                        </div>
+                        {{#if trainingExercises}}
+                        {{#each trainingExercises}}
+                            <div class="flex flex-col my-1">
+                                {{#dataValues}}
+                                    <div>
+                                        <span class="text-red-500 text-md font-bold mr-1">№:</span>
+                                        <span class="exercise_duration text-gray-100 ">{{chain}}</span>
+                                    </div>
+                                {{/dataValues}}
+                                {{#dataValues.exercise}}
+                                    {{#dataValues}}
+                                        <div class="flex justify-between">
+                                            <div>
+                                                <span class="text-red-500 text-md font-bold mr-1">Название упражнения:</span>
+                                                <span class="exercise_name text-gray-100 ">{{name}}</span>
+                                            </div>
+                                            <div>
+                                                <span class="text-red-500 text-md font-bold mr-1">Тип упражнения:</span>
+                                                <span class="exercise_name text-gray-100 ">
+                                                    {{#exerciseType.dataValues}}
+                                                        {{name}}
+                                                    {{/exerciseType.dataValues}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <div>
+                                                <span class="text-red-500 text-md font-bold mr-1">Длительность:</span>
+                                                <span class="exercise_duration text-gray-100 ">{{duration}} сек.</span>
+                                            </div>
+                                            <div>
+                                                <span class="text-red-500 text-md font-bold mr-1">Повторения:</span>
+                                                <span class="exercise_repetitions text-gray-100 ">{{repetitions}}
+                                                    раз</span>
+                                            </div>
+                                            <div>
+                                                <span class="text-red-500 text-md font-bold mr-1">Отдых:</span>
+                                                <span class="exercise_rest text-gray-100 ">{{rest}} сек.</span>
+                                            </div>
+                                        </div>
+                                    {{/dataValues}}
+                                {{/dataValues.exercise}}
+                            </div>
+                        {{/each}}
+                        {{/if}}
+                        <div class="flex flex-row my-1">
+                            <p class="text-red-500 text-md font-bold mr-2">Создал:</p>
+                            <p class="exercise_description text-gray-100 ">
+                                {{#user.dataValues}}
+                                    {{name}}
+                                    <span class="role" data-id="{{role}}"></span>
+                                {{/user.dataValues}}
+                            </p>
+                        </div>
+                    </div>
+                </figure>
+            {{/dataValues}}
+        {{/each}}
+    {{/if}}
+</div>
+
+<script src="/js/store/Training.js"></script>
+<script>
+    $('.role').each((i, e) => {
+        const role = $(e).data('id')
+        $(e).html("(" + new Auth().getNameRole(role) + ")")
+    })
+    const container = $('#trainings_container')
+
+    container.on('click', '.deleteTraining', (e) => {
+        const el = $(e.target),
+                id = el.data('id')
+        new Training().delete(id)
+    })
+</script>
