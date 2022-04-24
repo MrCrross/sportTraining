@@ -1,0 +1,123 @@
+<header class="w-full py-3 bg-zinc-800 mt-4 menu-admin hidden">
+    <div class="container flex flex-wrap items-center justify-between items-center mx-auto">
+        <nav class="items-center flex md:w-1/2 md:order-1 ">
+            <ul class="flex md:flex-row md:space-x-8 md:text-sm md:font-medium my-2">
+                <li>
+                    <a class="link" href="/user">Пользователи</a>
+                </li>
+                <li>
+                    <a class="link" href="/user/create">Добавить</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="container w-96 mx-auto my-5">
+    <form id="form_registration" class="bg-zinc-800 flex flex-col rounded-xl p-3">
+        <h2 class="font-bold text-xl text-center text-red-500 m-2">Добавление пользователя</h2>
+        <h3 id="message" class="font-bold text-md text-center text-gray-100 m-2 hidden"></h3>
+        <div class="my-2 flex justify-between">
+            <label class="form_label" for="last_name">Фамилия:</label>
+            <input class="form_input" id="last_name" placeholder="Фамилия" type="text" required>
+        </div>
+        <div class="my-2 flex justify-between">
+            <label class="form_label" for="first_name">Имя:</label>
+            <input class="form_input" id="first_name" placeholder="Имя" type="text" required>
+        </div>
+        <div class="my-2 flex justify-between">
+            <label class="form_label" for="name">Логин:</label>
+            <input class="form_input" id="name" placeholder="Логин" type="text" required>
+        </div>
+        <div class="my-2 flex justify-between">
+            <label class="form_label" for="password">Пароль:</label>
+            <input class="form_input" id="password" placeholder="Пароль" minLength="6" type="password" required>
+        </div>
+        <div class="my-2 flex justify-between">
+            <label class="form_label" for="password_confirm">Подтверждение пароля:</label>
+            <input class="form_input" id="password_confirm" placeholder="Пароль" type="password" required>
+        </div>
+        <div class="my-2 flex justify-between">
+            <label class="form_label" for="role">Роль:</label>
+            <select name="role" id="role" class="form_input">
+
+            </select>
+        </div>
+        <div class="my-2 w-full text-center">
+            <button class="form_submit" type="submit">Добавить</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(document).ready(()=>{
+        const roles = Auth.getRoles()
+        const select = $('#role')
+        roles.forEach((e)=>{
+            select.append(`<option value="${e.id}">${e.name}</option>`)
+        })
+    })
+    $('#password_confirm').on('input', function (e) {
+        const message = $('#message')
+        const submit = $('button[type="submit"]')
+        if ($(e.target).val() !== $('#password').val()) {
+            message.removeClass('hidden')
+            message.html('Пароли не совпадают')
+            submit.attr('disabled', 'disabled')
+        } else {
+            message.addClass('hidden')
+            message.html('')
+            submit.removeAttr('disabled')
+        }
+    })
+    $('#password').on('input', function (e) {
+        const message = $('#message')
+        const submit = $('button[type="submit"]')
+        if ($(e.target).val() !== $('#password_confirm').val()) {
+            message.removeClass('hidden')
+            message.html('Пароли не совпадают')
+            submit.attr('disabled', 'disabled')
+        } else {
+            message.addClass('hidden')
+            message.html('')
+            submit.removeAttr('disabled')
+        }
+    })
+    $('#form_registration').on('submit', function (e) {
+        e.preventDefault()
+        const last_name = $('#last_name').val()
+        const first_name = $('#first_name').val()
+        const name = $('#name').val()
+        const password = $('#password').val()
+        const password_confirm = $('#password_confirm').val()
+        const role = $('#role').val();
+        const message = $('#message')
+        if (password !== password_confirm) {
+            message.removeClass('hidden')
+            message.html('Пароли не совпадают')
+            return
+        }
+        $.ajax({
+            url: '/api/user/create',
+            headers:{
+                authorization: new Auth().token
+            },
+            type: 'post',
+            data: {
+                last_name,
+                first_name,
+                name,
+                password,
+                role
+            },
+            dataType: 'json'
+        }).done((res)=>{
+            if(res.error){
+                Toast.warning(res.message)
+                return
+            }
+            Toast.success(res.message)
+        })
+    })
+
+</script>

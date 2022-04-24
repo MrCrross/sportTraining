@@ -8,7 +8,7 @@ class ExerciseController {
         return res.render('exercises/index',{
             exercises,
             types,
-            page:[1]
+            page:[1,2]
         })
     }
 

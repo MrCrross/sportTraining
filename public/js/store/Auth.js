@@ -21,6 +21,9 @@ class Auth {
         let flag = true
         if(this.check()) {
             role =Number(this.getUser().role)
+        }else if(location.pathname==='/user/personal'){
+            location.href='/'
+            return
         }
         this.rolePage.forEach((page)=>{
             if(page===role){
@@ -81,6 +84,23 @@ class Auth {
             case 2: return 'Тренер'; break;
             case 3: return 'Пользователь'; break;
         }
+    }
+
+    static getRoles(){
+        return [
+            {
+                id:1,
+                name:'Администратор'
+            },
+            {
+                id:2,
+                name:'Тренер'
+            },
+            {
+                id:3,
+                name:'Пользователь'
+            },
+        ]
     }
 
     check(){

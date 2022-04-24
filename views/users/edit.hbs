@@ -1,0 +1,149 @@
+{{#user.dataValues}}
+<div class="container flex flex-col mx-auto my-5">
+    <h2 class="font-bold text-xl text-center text-red-500 m-2">Изменение личных данных пользователя</h2>
+    <div class="flex flex-row justify-between items-top">
+        <form id="form_update" class="bg-zinc-800 flex flex-col rounded-xl p-3">
+            <div class="my-2 flex justify-between">
+                <input id="id" type="hidden" value="{{id}}" readonly required>
+                <label class="form_label" for="last_name">Фамилия:</label>
+                <input class="form_input" id="last_name" placeholder="Фамилия" value="{{last_name}}" type="text" required>
+            </div>
+            <div class="my-2 flex justify-between">
+                <label class="form_label" for="first_name">Имя:</label>
+                <input class="form_input" id="first_name" placeholder="Имя" value="{{first_name}}" type="text" required>
+            </div>
+            <div class="my-2 flex justify-between">
+                <label class="form_label" for="name">Логин:</label>
+                <input class="form_input" id="name" placeholder="Логин" value="{{name}}" type="text" required>
+            </div>
+            <div class="my-2 flex justify-between">
+                <label class="form_label" for="role">Роль:</label>
+                <select name="role" id="role" class="form_input">
+
+                </select>
+            </div>
+            <div class="my-2 w-full text-center">
+                <button class="form_submit" type="submit">Изменить</button>
+            </div>
+        </form>
+        <form id="form_updatePassword" class="bg-zinc-800 flex flex-col rounded-xl p-3">
+            <h3 id="message" class="font-bold text-md text-center text-gray-100 m-2 hidden"></h3>
+            <div class="my-2 flex justify-between">
+                <label class="form_label" for="password">Новый пароль:</label>
+                <input class="form_input" id="password" placeholder="Новый пароль" minLength="6" type="password"
+                       required>
+            </div>
+            <div class="my-2 flex justify-between">
+                <label class="form_label" for="password_confirm">Подтверждение пароля:</label>
+                <input class="form_input" id="password_confirm" placeholder="Подтверждение пароля" type="password"
+                       required>
+            </div>
+            <div class="my-2 w-full text-center">
+                <button class="form_submit " type="submit">Изменить пароль</button>
+            </div>
+        </form>
+    </div>
+</div>
+{{/user.dataValues}}
+
+<script>
+    $(document).ready(() => {
+        const role = {{#user}}{{dataValues.role}}{{/user}},
+                roles = Auth.getRoles(),
+                select = $('#role')
+        roles.forEach((e) => {
+            select.append(`<option value="${e.id}">${e.name}</option>`)
+            if (e.id === role) {
+                $(`select option[value=${e.id}]`).prop('selected', true)
+            }
+        })
+    })
+
+    $('#form_update').on('submit', (e) => {
+        e.preventDefault()
+        const id = $('#id').val()
+        const last_name = $('#last_name').val()
+        const first_name = $('#first_name').val()
+        const name = $('#name').val()
+        const role = $('#role').val()
+        $.ajax({
+            url: '/api/user/update',
+            headers: {
+                authorization: new Auth().token
+            },
+            type: 'post',
+            data: {
+                id,
+                last_name,
+                first_name,
+                name,
+                role
+            },
+            dataType: 'json'
+        }).done((res) => {
+            if (res.error) {
+                Toast.warning(res.message)
+                return
+            }
+            Toast.success(res.message)
+        })
+    })
+
+    $('#form_updatePassword').on('submit', (e) => {
+        e.preventDefault()
+        const id = $('#id').val()
+        const password = $('#password').val()
+        const password_confirm = $('#password_confirm').val()
+        const message = $('#message')
+        if (password !== password_confirm) {
+            message.removeClass('hidden')
+            message.html('Пароли не совпадают')
+            return
+        }
+        $.ajax({
+            url: '/api/user/updatePassword',
+            headers: {
+                authorization: new Auth().token
+            },
+            type: 'post',
+            data: {
+                id,
+                password
+            },
+            dataType: 'json'
+        }).done((res) => {
+            if (res.error) {
+                Toast.warning(res.message)
+                return
+            }
+            Toast.success(res.message)
+        })
+    })
+
+    $('#password_confirm').on('input', function (e) {
+        const message = $('#message')
+        const submit = $('#form_updatePassword').find('button[type="submit"]')
+        if ($(e.target).val() !== $('#password').val()) {
+            message.removeClass('hidden')
+            message.html('Пароли не совпадают')
+            submit.attr('disabled', 'disabled')
+        } else {
+            message.addClass('hidden')
+            message.html('')
+            submit.removeAttr('disabled')
+        }
+    })
+    $('#password').on('input', function (e) {
+        const message = $('#message')
+        const submit = $('#form_updatePassword').find('button[type="submit"]')
+        if ($(e.target).val() !== $('#password_confirm').val()) {
+            message.removeClass('hidden')
+            message.html('Пароли не совпадают')
+            submit.attr('disabled', 'disabled')
+        } else {
+            message.addClass('hidden')
+            message.html('')
+            submit.removeAttr('disabled')
+        }
+    })
+</script>
