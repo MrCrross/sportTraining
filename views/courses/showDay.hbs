@@ -35,18 +35,30 @@
             <p class="mx-4 my-2 font-bold text-2xl text-red-500 my-2">Упражнения:</p>
             <div class="mx-6 my-2 flex flex-col">
                 {{#each training.dataValues.trainingExercises}}
-                    <div class="flex flex-col my-1">
+                    <div class="flex flex-col my-1 border-b-2 pb-3 border-red-500">
                         {{#dataValues}}
                             <div>
                                 <span class="text-red-500 text-md font-bold mr-1">№:</span>
                                 <span class="exercise_duration text-gray-100 ">{{chain}}</span>
                             </div>
                             {{#exercise.dataValues}}
-                                <div>
-                                    <span class="text-red-500 text-md font-bold mr-1">Название:</span>
-                                    <span class="exercise_name text-gray-100 ">
-                                        {{exerciseType.dataValues.name}}: {{name}}
-                                    </span>
+                                <div class="flex justify-between">
+                                    <div>
+                                        <span class="text-red-500 text-md font-bold mr-1">Название:</span>
+                                        <span class="exercise_name text-gray-100">
+                                            {{exerciseType.dataValues.name}}: {{name}}
+                                        </span>
+                                    </div>
+                                    <div class="flex">
+                                        <div class="timer_data hidden">
+                                            <span class="timer_head duration mr-5 text-red-500">Упражнение (сек.)</span>
+                                            <span class="timer_body mx-2 text-gray-100">{{multiply duration repetitions}}</span>
+                                        </div>
+                                        <button class="timer_btn text-green-500 font-bold bg-gray-100 py-1 px-2 rounded"
+                                                data-rest="{{rest}}">
+                                            Начать
+                                        </button>
+                                    </div>
                                 </div>
                                 <div>
                                     <span class="text-red-500 text-md font-bold mr-1">Описание:</span>
@@ -85,9 +97,42 @@
         $(e).html("(" + new Auth().getNameRole(role) + ")")
     })
 
-    $('#deleteCourse').on('click', (e) => {
-        const el = $(e.target),
-                id = el.data('id')
-        new Course().delete(id)
-    })
+    $('.timer_btn').on('click',(e)=>startExercise(e))
+
+    function startExercise(e) {
+        const timer = $(e.target),
+                rest = timer.data('rest'),
+                timer_data = timer.parent().find('.timer_data'),
+                timer_head = timer_data.find('.timer_head'),
+                timer_body = timer_data.find('.timer_body'),
+                timer_val = timer_body.html()
+        timer.addClass('hidden')
+        timer_data.removeClass('hidden')
+        Timer(timer_val,timer_head,timer_body,rest)
+    }
+
+    function Timer(time,timer_head,timer_body,rest){
+        return setTimeout(function updateTime(){
+            if(time !=='00'){
+                time = Number(time)-1
+                if(time<10){
+                    time = "0"+time
+                }
+            }else if(timer_head.hasClass('duration')){
+                timer_body.html(rest)
+                time = rest
+                timer_head.removeClass('duration')
+                timer_head.addClass('rest')
+                timer_head.html('Отдых (сек.)')
+            } else if(timer_head.hasClass('rest')){
+                timer_head.removeClass('rest')
+                timer_head.addClass('end')
+                timer_head.html('Закончено')
+                timer_body.addClass('hidden')
+                return
+            }
+            timer_body.html(time)
+            setTimeout(()=>updateTime(),1000)
+        },1000)
+    }
 </script>

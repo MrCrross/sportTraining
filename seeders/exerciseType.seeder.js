@@ -18,6 +18,12 @@ class ExerciseTypeSeeder{
             {
                 name: "Кардио"
             },
+            {
+                name: "На восстановление"
+            },
+            {
+                name: "Интенсивные"
+            },
         ]
     }
 

@@ -18,6 +18,9 @@ class TrainingTypeSeeder{
             {
                 name: "Силовая"
             },
+            {
+                name: "На восстановление"
+            },
         ]
     }
 

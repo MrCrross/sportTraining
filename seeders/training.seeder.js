@@ -10,7 +10,32 @@ class TrainingSeeder{
     data(){
         return [
             {
+                name: "НОГИ",
+                trainingTypeId:3,
+                userId:1
+            },
+            {
                 name: "PUSH",
+                trainingTypeId:3,
+                userId:1
+            },
+            {
+                name: "Восстановление",
+                trainingTypeId:4,
+                userId:1
+            },
+            {
+                name: "PULL",
+                trainingTypeId:3,
+                userId:1
+            },
+            {
+                name: "Кардио",
+                trainingTypeId:2,
+                userId:1
+            },
+            {
+                name: "Сражение",
                 trainingTypeId:3,
                 userId:1
             },
