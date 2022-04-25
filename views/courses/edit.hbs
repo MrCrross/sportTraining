@@ -43,7 +43,7 @@
                                     <select class="form_input w-full mx-1" name="trainings">
                                         {{#each ../../../trainings}}
                                             {{#dataValues}}
-                                                <option value="{{id}}" {{#eq id ../dataValues.id}}selected{{/eq}}>{{name}}</option>
+                                                <option value="{{id}}" {{#eq id ../../../dataValues.trainingId}}selected{{/eq}}>{{name}}</option>
                                             {{/dataValues}}
                                         {{/each}}
                                     </select>
